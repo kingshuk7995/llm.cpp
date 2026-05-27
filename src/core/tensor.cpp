@@ -1,4 +1,5 @@
 #include <gpt2lab/core/tensor.hpp>
+#include <random>
 
 namespace gpt2lab {
 
@@ -8,6 +9,15 @@ Tensor::Tensor(const Shape &shape, DType dtype)
 void Tensor::fill(float value) {
   for (size_t i = 0; i < data_->size(); ++i) {
     (*data_)[i] = value;
+  }
+}
+
+void Tensor::init_normal(float mean, float stddev, unsigned int seed) {
+  if (!data_) return;
+  std::mt19937 gen(seed);
+  std::normal_distribution<float> dist(mean, stddev);
+  for (size_t i = 0; i < data_->size(); ++i) {
+    (*data_)[i] = dist(gen);
   }
 }
 

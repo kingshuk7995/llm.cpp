@@ -2,7 +2,7 @@
 
 #include <gpt2lab/autograd/backward.hpp>
 #include <gpt2lab/core/tensor.hpp>
-#include <gpt2lab/ops/add.hpp>
+#include <gpt2lab/ops/ops.hpp>
 
 using namespace gpt2lab;
 

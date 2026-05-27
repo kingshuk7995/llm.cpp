@@ -75,11 +75,7 @@ target_include_directories(gpt2lab_core PUBLIC
 # =========================================================
 
 add_library(gpt2lab_ops
-    src/ops/matmul.cpp
-    src/ops/add.cpp
-    src/ops/gelu.cpp
-    src/ops/softmax.cpp
-    src/ops/layernorm.cpp
+    src/ops/ops.cpp
 )
 
 target_include_directories(gpt2lab_ops PUBLIC
@@ -193,12 +189,6 @@ endif()
 
 add_library(gpt2lab_model
     src/model/gpt2.cpp
-    src/model/transformer_block.cpp
-    src/model/mha.cpp
-    src/model/mlp.cpp
-    src/model/embeddings.cpp
-    src/model/lm_head.cpp
-    src/model/init.cpp
 )
 
 target_include_directories(gpt2lab_model PUBLIC

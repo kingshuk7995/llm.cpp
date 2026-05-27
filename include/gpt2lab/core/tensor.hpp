@@ -12,12 +12,15 @@ public:
   Tensor() = default;
   Tensor(const Shape &shape, DType dtype = DType::Float32);
 
+  DType dtype() const { return dtype_; }
+
   float *data() { return data_->data(); }
   const float *data() const { return data_->data(); }
   const Shape &shape() const { return shape_; }
   size_t size() const { return data_->size(); }
 
   void fill(float value);
+  void init_normal(float mean, float stddev, unsigned int seed = 42);
 
   void set_requires_grad(bool req) {
     requires_grad_ = req;
