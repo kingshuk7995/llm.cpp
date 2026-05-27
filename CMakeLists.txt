@@ -247,7 +247,7 @@ target_link_libraries(gpt2lab_bench PUBLIC
 # =========================================================
 
 add_executable(train_gpt2
-    apps/train_gpt2.cpp
+    examples/train_gpt2.cpp
 )
 
 target_link_libraries(train_gpt2 PRIVATE
@@ -256,7 +256,7 @@ target_link_libraries(train_gpt2 PRIVATE
 )
 
 add_executable(infer_gpt2
-    apps/infer_gpt2.cpp
+    examples/infer_gpt2.cpp
 )
 
 target_link_libraries(infer_gpt2 PRIVATE
@@ -265,7 +265,7 @@ target_link_libraries(infer_gpt2 PRIVATE
 )
 
 add_executable(benchmark_matmul
-    apps/benchmark_matmul.cpp
+    benchmarks/benchmark_matmul.cpp
 )
 
 target_link_libraries(benchmark_matmul PRIVATE
@@ -275,7 +275,7 @@ target_link_libraries(benchmark_matmul PRIVATE
 )
 
 add_executable(benchmark_attention
-    apps/benchmark_attention.cpp
+    benchmarks/benchmark_attention.cpp
 )
 
 target_link_libraries(benchmark_attention PRIVATE
@@ -285,7 +285,7 @@ target_link_libraries(benchmark_attention PRIVATE
 )
 
 add_executable(benchmark_layernorm
-    apps/benchmark_layernorm.cpp
+    benchmarks/benchmark_layernorm.cpp
 )
 
 target_link_libraries(benchmark_layernorm PRIVATE
@@ -295,7 +295,7 @@ target_link_libraries(benchmark_layernorm PRIVATE
 )
 
 add_executable(compare_backends
-    apps/compare_backends.cpp
+    benchmarks/compare_backends.cpp
 )
 
 target_link_libraries(compare_backends PRIVATE
@@ -305,8 +305,13 @@ target_link_libraries(compare_backends PRIVATE
     gpt2lab_runtime
 )
 
+if(GPT2LAB_ENABLE_CUDA)
+    target_compile_definitions(compare_backends PRIVATE GPT2LAB_ENABLE_CUDA)
+    target_link_libraries(compare_backends PRIVATE gpt2lab_backend_cublas)
+endif()
+
 add_executable(gradient_check
-    apps/gradient_check.cpp
+    tests/tools/gradient_check.cpp
 )
 
 target_link_libraries(gradient_check PRIVATE
@@ -316,7 +321,7 @@ target_link_libraries(gradient_check PRIVATE
 )
 
 add_executable(dump_tensor
-    apps/dump_tensor.cpp
+    tests/tools/dump_tensor.cpp
 )
 
 target_link_libraries(dump_tensor PRIVATE
