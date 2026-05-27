@@ -11,5 +11,5 @@ TEST(Gpt2IntegrationTest, ForwardPass) {
   Tensor input({1, 1});
   Tensor output = model.forward(input);
   EXPECT_EQ(output.shape().dim(0), 1);
-  EXPECT_EQ(output.shape().dim(1), 1);
+  EXPECT_EQ(output.shape().dim(1), 50257);
 }

@@ -121,9 +121,14 @@ add_library(gpt2lab_backend_cpu_et
     src/backends/cpu_et.cpp
 )
 
+find_package(OpenMP REQUIRED)
+target_link_libraries(gpt2lab_backend_cpu_et PUBLIC OpenMP::OpenMP_CXX)
+target_compile_options(gpt2lab_backend_cpu_et PRIVATE -mavx2 -mfma)
+
 add_library(gpt2lab_backend_eigen
     src/backends/eigen_backend.cpp
 )
+target_link_libraries(gpt2lab_backend_eigen PUBLIC Eigen3::Eigen)
 
 if(GPT2LAB_ENABLE_CUDA)
     add_library(gpt2lab_backend_cuda
@@ -133,6 +138,7 @@ if(GPT2LAB_ENABLE_CUDA)
     add_library(gpt2lab_backend_cublas
         src/backends/cublas_backend.cu
     )
+    target_link_libraries(gpt2lab_backend_cublas PUBLIC CUDA::cublas)
 
     add_library(gpt2lab_backend_cudnn
         src/backends/cudnn_backend.cu
