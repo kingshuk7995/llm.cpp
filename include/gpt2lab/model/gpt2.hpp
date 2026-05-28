@@ -15,6 +15,15 @@ public:
   Tensor wpe;
 };
 
+class LayerNorm {
+public:
+  LayerNorm(const Gpt2Config& config);
+  Tensor forward(const Tensor &x);
+
+  Tensor gamma;
+  Tensor beta;
+};
+
 class MultiHeadAttention {
 public:
   MultiHeadAttention(const Gpt2Config& config);
@@ -24,6 +33,8 @@ public:
   Tensor w_k, b_k;
   Tensor w_v, b_v;
   Tensor c_proj_w, c_proj_b;
+private:
+  Gpt2Config config_;
 };
 
 class MLP {
@@ -40,7 +51,9 @@ public:
   TransformerBlock(const Gpt2Config& config);
   Tensor forward(const Tensor &x);
 
+  LayerNorm ln_1;
   MultiHeadAttention attn;
+  LayerNorm ln_2;
   MLP mlp;
 };
 
@@ -48,11 +61,13 @@ class Gpt2Model {
 public:
   explicit Gpt2Model(const Gpt2Config &config);
   Tensor forward(const Tensor &input);
+  void load_weights(const std::string& path);
 
 private:
   Gpt2Config config_;
   Embeddings embeddings_;
   std::vector<TransformerBlock> blocks_;
+  LayerNorm ln_f;
   Tensor lm_head_w;
 };
 

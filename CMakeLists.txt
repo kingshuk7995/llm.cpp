@@ -199,7 +199,14 @@ target_link_libraries(gpt2lab_model PUBLIC
     gpt2lab_core
     gpt2lab_ops
     gpt2lab_autograd
+    gpt2lab_ops
     nlohmann_json::nlohmann_json
+)
+
+# Resolve circular dependency and backend linkage for ops
+target_link_libraries(gpt2lab_ops PUBLIC
+    gpt2lab_autograd
+    gpt2lab_backend_cpu_naive
 )
 
 # =========================================================
