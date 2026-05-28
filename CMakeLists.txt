@@ -275,6 +275,15 @@ add_executable(benchmark_matmul
     benchmarks/benchmark_matmul.cpp
 )
 
+add_executable(benchmark_inference
+    benchmarks/benchmark_inference.cpp
+)
+
+target_link_libraries(benchmark_inference PRIVATE
+    gpt2lab_model
+    gpt2lab_runtime
+)
+
 target_link_libraries(benchmark_matmul PRIVATE
     gpt2lab_bench
     gpt2lab_ops
